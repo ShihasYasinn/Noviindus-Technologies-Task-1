@@ -1,0 +1,73 @@
+{% extends 'airport/base.html' %}
+
+{% block title %}Find Nth Node - Airport Management System{% endblock %}
+
+{% block header %}
+<h2>🔍 Find Nth Left/Right Node</h2>
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.help_text %}
+                    <small class="help-text">{{ field.help_text }}</small>
+                {% endif %}
+                {% if field.errors %}
+                    <div class="error-messages">
+                        {% for error in field.errors %}
+                            <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn">🔍 Search Node</button>
+    </form>
+</div>
+
+{% if search_performed %}
+    {% if result %}
+        <div class="result-card">
+            <h3>✅ Node Found</h3>
+            <div class="route-info">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div style="font-size: 1.1rem; color: rgba(255,255,255,0.9); margin-bottom: 10px;">
+                        {{ search_details.n }}{{ search_details.n|add:"0"|slice:"-1"|yesno:"st,nd,rd,th" }} {{ search_details.direction|lower }} node from {{ search_details.airport.code }}
+                    </div>
+                    <div class="airport-code" style="font-size: 2rem;">{{ result.code }}</div>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">🛫 Starting Airport:</span>
+                    <span>{{ search_details.airport.code }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">🧭 Direction:</span>
+                    <span>{{ search_details.direction }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">📍 Position:</span>
+                    <span>{{ search_details.n }}</span>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="no-result">
+            <h3>❌ No Node Found</h3>
+            <p>No {{ search_details.n }}{{ search_details.n|add:"0"|slice:"-1"|yesno:"st,nd,rd,th" }} {{ search_details.direction|lower }} node found from {{ search_details.airport.code }}. The tree may not be deep enough in that direction.</p>
+        </div>
+    {% endif %}
+{% endif %}
+{% endblock %}
+
+{% block navigation %}
+<a href="{% url 'home' %}">🏠 Home</a>
+<a href="{% url 'add-airport' %}">🏢 Add Airport</a>
+<a href="{% url 'add-route' %}">➕ Add New Route</a>
+<a href="{% url 'longest-route' %}">📏 Longest Route</a>
+<a href="{% url 'shortest-route' %}">⚡ Shortest Route</a>
+{% endblock %}

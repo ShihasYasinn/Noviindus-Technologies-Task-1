@@ -1,0 +1,115 @@
+{% extends 'airport/base.html' %}
+
+{% block title %}Longest Route - Airport Management System{% endblock %}
+
+{% block header %}
+<h2>📏 Find Longest Route</h2>
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.help_text %}
+                    <small class="help-text" style="color: #6c757d; font-size: 0.875rem; margin-top: 4px; display: block;">{{ field.help_text }}</small>
+                {% endif %}
+                {% if field.errors %}
+                    <div class="error-messages">
+                        {% for error in field.errors %}
+                            <span class="error" style="color: #dc3545; font-size: 0.875rem;">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn">🔍 Find Longest Route</button>
+    </form>
+</div>
+
+{% if search_performed %}
+    {% if route %}
+        <div class="result-card">
+            <h3>🏆 Longest Route Found</h3>
+            <div class="route-info">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    {% if search_details.search_type == 'from_airport' %}
+                        <div style="font-size: 1.1rem; color: rgba(255,255,255,0.9); margin-bottom: 10px;">
+                            Longest route from {{ search_details.airport.code }}
+                        </div>
+                    {% else %}
+                        <div style="font-size: 1.1rem; color: rgba(255,255,255,0.9); margin-bottom: 10px;">
+                            Longest route in the entire system
+                        </div>
+                    {% endif %}
+                </div>
+                <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                    <span class="airport-code">{{ route.parent.code }}</span>
+                    <span class="route-arrow">✈️</span>
+                    <span class="airport-code">{{ route.child.code }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">📍 Position:</span>
+                    <span>{{ route.position }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">⏱️ Duration:</span>
+                    <span>{{ route.duration }} minutes</span>
+                </div>
+                {% if search_details.search_type == 'from_airport' %}
+                <div class="info-item">
+                    <span class="info-label">🛫 From Airport:</span>
+                    <span>{{ search_details.airport.code }}</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    {% else %}
+        <div class="no-result">
+            <h3>❌ No Routes Found</h3>
+            {% if search_details.search_type == 'from_airport' %}
+                <p>No routes found from {{ search_details.airport.code }}. This airport may not have any outgoing routes.</p>
+            {% else %}
+                <p>No routes available in the system. Add some routes to see the longest one!</p>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endif %}
+
+<!-- Add JavaScript for dynamic form behavior -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchTypeRadios = document.querySelectorAll('input[name="search_type"]');
+    const airportField = document.querySelector('#id_airport').closest('.form-group');
+    
+    function toggleAirportField() {
+        const selectedType = document.querySelector('input[name="search_type"]:checked');
+        if (selectedType && selectedType.value === 'from_airport') {
+            airportField.style.display = 'block';
+            document.querySelector('#id_airport').required = true;
+        } else {
+            airportField.style.display = 'none';
+            document.querySelector('#id_airport').required = false;
+        }
+    }
+    
+    searchTypeRadios.forEach(radio => {
+        radio.addEventListener('change', toggleAirportField);
+    });
+    
+    // Initial state
+    toggleAirportField();
+});
+</script>
+{% endblock %}
+
+{% block navigation %}
+<a href="{% url 'home' %}">🏠 Home</a>
+<a href="{% url 'add-airport' %}">🏢 Add Airport</a>
+<a href="{% url 'add-route' %}">➕ Add Route</a>
+<a href="{% url 'nth-node' %}">🔍 Find Nth Node</a>
+<a href="{% url 'shortest-route' %}">⚡ Shortest Route</a>
+{% endblock %}

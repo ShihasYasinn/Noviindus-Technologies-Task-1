@@ -1,0 +1,48 @@
+{% extends 'airport/base.html' %}
+
+{% block title %}Add Airport Route - Airport Management System{% endblock %}
+
+{% block header %}
+<h2>🛫 Add New Airport Route</h2>
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.help_text %}
+                    <small class="help-text">{{ field.help_text }}</small>
+                {% endif %}
+                {% if field.errors %}
+                    <div class="error-messages">
+                        {% for error in field.errors %}
+                            <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn">✈️ Add Route</button>
+    </form>
+</div>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+{% endblock %}
+
+{% block navigation %}
+<a href="{% url 'home' %}">🏠 Home</a>
+<a href="{% url 'add-airport' %}">🏢 Add Airport</a>
+<a href="{% url 'nth-node' %}">🔍 Find Nth Node</a>
+<a href="{% url 'longest-route' %}">📏 View Longest Route</a>
+<a href="{% url 'shortest-route' %}">⚡ Shortest Route</a>
+{% endblock %}
