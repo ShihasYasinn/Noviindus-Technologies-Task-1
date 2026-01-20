@@ -3,13 +3,13 @@
 {% block title %}Add Airport - Airport Management System{% endblock %}
 
 {% block header %}
-<h2>✈️ Add New Airport</h2>
+<h2> Add New Airport</h2>
 {% endblock %}
 
 {% block content %}
 <!-- Instructions -->
 <div style="background: #e3f2fd; border: 1px solid #bbdefb; border-radius: 8px; padding: 20px; margin-bottom: 24px;">
-    <h4 style="color: #1565c0; margin: 0 0 12px 0; font-size: 1rem;">📋 Instructions</h4>
+    <h4 style="color: #1565c0; margin: 0 0 12px 0; font-size: 1rem;"> Instructions</h4>
     <p style="color: #1976d2; margin: 0; font-size: 0.875rem; line-height: 1.4;">
         Add individual airports first, then create routes between them. Airport codes should be unique (e.g., JFK, LAX, ORD).
     </p>
@@ -18,7 +18,7 @@
 <!-- Current Airports -->
 {% if airports_list %}
 <div style="background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; padding: 20px; margin-bottom: 24px;">
-    <h4 style="color: #495057; margin: 0 0 12px 0; font-size: 1rem;">🏢 Current Airports ({{ airports_count }})</h4>
+    <h4 style="color: #495057; margin: 0 0 12px 0; font-size: 1rem;"> Current Airports ({{ airports_count }})</h4>
     <div style="display: flex; flex-wrap: wrap; gap: 8px;">
         {% for airport in airports_list %}
             <span style="background: #007bff; color: white; padding: 4px 12px; border-radius: 16px; font-size: 0.875rem; font-weight: 500;">{{ airport.code }}</span>
@@ -47,19 +47,19 @@
                 {% endif %}
             </div>
         {% endfor %}
-        <button type="submit" class="btn">✈️ Add Airport</button>
+        <button type="submit" class="btn">Add Airport</button>
     </form>
 </div>
 
 <!-- Next Steps -->
 {% if airports_count >= 2 %}
 <div style="background: #d4edda; border: 1px solid #c3e6cb; border-radius: 8px; padding: 20px; margin-top: 24px;">
-    <h4 style="color: #155724; margin: 0 0 12px 0; font-size: 1rem;">🎉 Ready for Routes!</h4>
+    <h4 style="color: #155724; margin: 0 0 12px 0; font-size: 1rem;">Ready for Routes!</h4>
     <p style="color: #155724; margin: 0 0 16px 0; font-size: 0.875rem;">
         You now have {{ airports_count }} airports. You can start creating routes between them.
     </p>
     <a href="{% url 'add-route' %}" style="display: inline-block; background: #28a745; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 0.875rem; font-weight: 500;">
-        ➕ Create Routes
+        Create Routes
     </a>
 </div>
 {% elif airports_count == 1 %}
@@ -73,9 +73,9 @@
 {% endblock %}
 
 {% block navigation %}
-<a href="{% url 'home' %}">🏠 Home</a>
-<a href="{% url 'add-route' %}">➕ Add Route</a>
-<a href="{% url 'nth-node' %}">🔍 Find Nth Node</a>
-<a href="{% url 'longest-route' %}">📏 Longest Route</a>
-<a href="{% url 'shortest-route' %}">⚡ Shortest Route</a>
+<a href="{% url 'home' %}"> Home</a>
+<a href="{% url 'add-route' %}"> Add Route</a>
+<a href="{% url 'nth-node' %}">Find Nth Node</a>
+<a href="{% url 'longest-route' %}"> Longest Route</a>
+<a href="{% url 'shortest-route' %}"> Shortest Route</a>
 {% endblock %}

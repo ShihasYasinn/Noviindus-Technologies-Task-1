@@ -3,7 +3,7 @@
 {% block title %}Shortest Route - Airport Management System{% endblock %}
 
 {% block header %}
-<h2>⚡ Find Shortest Route Between Airports</h2>
+<h2> Find Shortest Route Between Airports</h2>
 {% endblock %}
 
 {% block content %}
@@ -26,33 +26,33 @@
                 {% endif %}
             </div>
         {% endfor %}
-        <button type="submit" class="btn">🔍 Find Shortest Route</button>
+        <button type="submit" class="btn"> Find Shortest Route</button>
     </form>
 </div>
 
 {% if search_performed %}
     {% if route %}
         <div class="result-card">
-            <h3>🎯 Shortest Route Found</h3>
+            <h3> Shortest Route Found</h3>
             <div class="route-info">
                 <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
                     <span class="airport-code">{{ search_details.source.code }}</span>
-                    <span class="route-arrow">✈️</span>
+                    <span class="route-arrow"></span>
                     <span class="airport-code">{{ search_details.destination.code }}</span>
                 </div>
                 <div class="info-item">
-                    <span class="info-label">📍 Position:</span>
+                    <span class="info-label"> Position:</span>
                     <span>{{ route.position }}</span>
                 </div>
                 <div class="info-item">
-                    <span class="info-label">⏱️ Duration:</span>
+                    <span class="info-label"> Duration:</span>
                     <span>{{ route.duration }} minutes</span>
                 </div>
             </div>
         </div>
     {% else %}
         <div class="no-result">
-            <h3>❌ No Direct Route Found</h3>
+            <h3> No Direct Route Found</h3>
             <p>No direct route exists between {{ search_details.source.code }} and {{ search_details.destination.code }}. These airports may not be directly connected.</p>
         </div>
     {% endif %}
@@ -60,9 +60,9 @@
 {% endblock %}
 
 {% block navigation %}
-<a href="{% url 'home' %}">🏠 Home</a>
-<a href="{% url 'add-airport' %}">🏢 Add Airport</a>
-<a href="{% url 'add-route' %}">➕ Add Route</a>
-<a href="{% url 'nth-node' %}">🔍 Find Nth Node</a>
-<a href="{% url 'longest-route' %}">📏 Longest Route</a>
+<a href="{% url 'home' %}"> Home</a>
+<a href="{% url 'add-airport' %}"> Add Airport</a>
+<a href="{% url 'add-route' %}"> Add Route</a>
+<a href="{% url 'nth-node' %}"> Find Nth Node</a>
+<a href="{% url 'longest-route' %}"> Longest Route</a>
 {% endblock %}
